@@ -169,6 +169,7 @@
             </div>
 
             @Html.HiddenFor(model => model.Progreso1P)
+            @Html.HiddenFor(model => model.CodigoTASEstudiante)
 
         </div>
 
@@ -218,7 +219,7 @@
 
         var progresoarr = $("#Progreso1P").val()
         var splitprogreso = progresoarr.split('*.-Split-.*')
-        //console.log(splitprogreso)
+        console.log(progresoarr)
         $("input.sumProgreso").each(function (index) {
             
             //alert($("#Progreso1P").val())

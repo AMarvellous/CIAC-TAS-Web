@@ -1,4 +1,6 @@
-﻿using adminlte.TASEstudianteService;
+﻿using adminlte.Classes;
+using adminlte.TASEstudianteMateriasAsignacionService;
+using adminlte.TASEstudianteService;
 using adminlte.TASGestionService;
 using adminlte.TASGrupoService;
 using adminlte.TASMateriaService;
@@ -37,10 +39,7 @@ namespace adminlte.Controllers
 
             TASMateriaInterfaceClient TASMateria = new TASMateriaInterfaceClient();
             ViewBag.ltTASMateria = TASMateria.WebTASMateriaSeleccionarXSubCompania((string)Session["SesionSubCompania"], (string)Session["Sesion"], (string)Session["SesionSubCompania"]);
-
-            TASModuloInterfaceClient TASModulo = new TASModuloInterfaceClient();
-            ViewBag.ltTASModulo = TASModulo.WebTASModuloSeleccionarXSubCompania((string)Session["SesionSubCompania"], (string)Session["Sesion"], (string)Session["SesionSubCompania"]);
-
+          
             TASGestionInterfaceClient TASGestion = new TASGestionInterfaceClient();
             ViewBag.ltTASGestion = TASGestion.WebTASGestionSeleccionarXSubCompania((string)Session["SesionSubCompania"], (string)Session["Sesion"], (string)Session["SesionSubCompania"]);
 
@@ -57,15 +56,19 @@ namespace adminlte.Controllers
             if (setTASRegistroNotas.ltTASRegistroNotas != null)
             {
                 TASRegistroNotasEntity etTASRegistroNotasForm = setTASRegistroNotas.ltTASRegistroNotas.First();
-                if (etTASRegistroNotasForm.Programa != "" && etTASRegistroNotasForm.Grupo != "" && etTASRegistroNotasForm.Materia != "" && etTASRegistroNotasForm.ModuloMateria != "" && etTASRegistroNotasForm.Gestion != "")
+                if (etTASRegistroNotasForm.Programa != "" && etTASRegistroNotasForm.Grupo != "" && etTASRegistroNotasForm.Materia != "" && etTASRegistroNotasForm.Gestion != "")
                 {
+                    TASMateriaInterfaceClient TASMateria = new TASMateriaInterfaceClient();
+                    var setTASMateria = TASMateria.WebSeleccionar((string)Session["SesionSubCompania"], etTASRegistroNotasForm.Materia, (string)Session["Sesion"], (string)Session["SesionSubCompania"]);
+                    var etTASMateria = setTASMateria.ltTASMateria.First();
+
                     TASRegistroNotasSet setTASRegistroNotasNuevo = TASRegistroNotas.WebNuevo((string)Session["Sesion"], (string)Session["SesionSubCompania"]);
                     etTASRegistroNotas = setTASRegistroNotasNuevo.ltTASRegistroNotas.First();
                     etTASRegistroNotas.SubCompania = (string)Session["SesionSubCompania"];
                     etTASRegistroNotas.Programa = etTASRegistroNotasForm.Programa;
                     etTASRegistroNotas.Grupo = etTASRegistroNotasForm.Grupo;
                     etTASRegistroNotas.Materia = etTASRegistroNotasForm.Materia;
-                    etTASRegistroNotas.ModuloMateria = etTASRegistroNotasForm.ModuloMateria;
+                    etTASRegistroNotas.ModuloMateria = etTASMateria.Modulo;
                     etTASRegistroNotas.Gestion = etTASRegistroNotasForm.Gestion;
                     etTASRegistroNotas.InstructorLic = (string)Session["Usuario"];
                     etTASRegistroNotas.Estado = "Abierto";
@@ -107,9 +110,19 @@ namespace adminlte.Controllers
             //TASRegistroNotasInterfaceClient TASRegistroNotas = new TASRegistroNotasInterfaceClient();
             //TASRegistroNotasSet setTASRegistroNotas = TASRegistroNotas.WebSeleccionar(SubCompania,Programa,Grupo,Materia,ModuloMateria,Gestion,(string)Session["Sesion"], (string)Session["SesionSubCompania"]);
 
-            TASEstudianteInterfaceClient TASEstudiante = new TASEstudianteInterfaceClient();
-            List<TASEstudianteEntity> ltTASEstudiante = TASEstudiante.WebTASEstudianteSeleccionarTodo((string)Session["Sesion"], (string)Session["SesionSubCompania"]);
-            ltTASEstudiante = ltTASEstudiante.Where(x => x.Grupo == Grupo && x.Programa == Programa).ToList();
+            //TASEstudianteInterfaceClient TASEstudiante = new TASEstudianteInterfaceClient();
+            //List<TASEstudianteEntity> ltTASEstudiante = TASEstudiante.WebTASEstudianteSeleccionarTodo((string)Session["Sesion"], (string)Session["SesionSubCompania"]);
+            //ltTASEstudiante = ltTASEstudiante.Where(x => x.Grupo == Grupo && x.Programa == Programa).ToList();
+
+            TASEstudianteMateriasAsignacionInterfaceClient TASEstudianteMateriasAsignacion = new TASEstudianteMateriasAsignacionInterfaceClient();
+            var ltTASEstudianteMateriasAsignacion = TASEstudianteMateriasAsignacion.WebTASEstudianteMateriasAsignacionSeleccionarXSubCompania(SubCompania, (string)Session["Sesion"], (string)Session["SesionSubCompania"]);
+            ltTASEstudianteMateriasAsignacion = ltTASEstudianteMateriasAsignacion.Where(x => x.Programa == Programa && x.Grupo == Grupo && x.Materia == Materia && x.ModuloMateria == ModuloMateria && x.Gestion == Gestion ).ToList();
+            TASEstudianteHelper TASEstudianteHelper = new TASEstudianteHelper();
+            foreach (var item in ltTASEstudianteMateriasAsignacion)
+            {
+                //Temporalmente Colocamos el nombre Aca
+                item.Texto0 = TASEstudianteHelper.TASEstudianteObtenerNombreEstudiante(item.EstudianteCI,(string)Session["SesionSubCompania"], (string)Session["Sesion"]);
+            }            
 
             ViewBag.SubCompania = SubCompania;
             ViewBag.Programa = Programa;
@@ -118,15 +131,15 @@ namespace adminlte.Controllers
             ViewBag.ModuloMateria = ModuloMateria;
             ViewBag.Gestion = Gestion;
 
-            return View(ltTASEstudiante);
+            return View(ltTASEstudianteMateriasAsignacion);
         }
 
-        public ActionResult TASRegistroNotasEstudianteEditar(string NombreEstudiante, string CodigoTASEstudiante, string SubCompania, string Programa, string Grupo, string Materia, string ModuloMateria, string Gestion, string MensajeError = "")
+        public ActionResult TASRegistroNotasEstudianteEditar(string NombreEstudiante, string EstudianteCI, string SubCompania, string Programa, string Grupo, string Materia, string ModuloMateria, string Gestion, string MensajeError = "")
         {
             TASRegistroNotasInterfaceClient TASRegistroNotas = new TASRegistroNotasInterfaceClient();
             TASRegistroNotasSet setTASRegistroNotas = TASRegistroNotas.WebSeleccionar(SubCompania,Programa,Grupo,Materia,ModuloMateria,Gestion,(string)Session["Sesion"], (string)Session["SesionSubCompania"]);
             TASRegistroNotasEstudianteEntity etTASRegistroNotasEstudiante = new TASRegistroNotasEstudianteEntity();
-            List<TASRegistroNotasEstudianteEntity> ltTASRegistroNotasEstudiante = setTASRegistroNotas.ltTASRegistroNotasEstudiante.Where(x => x.CodigoTASEstudiante == CodigoTASEstudiante).ToList();
+            List<TASRegistroNotasEstudianteEntity> ltTASRegistroNotasEstudiante = setTASRegistroNotas.ltTASRegistroNotasEstudiante.Where(x => x.CodigoTASEstudiante == EstudianteCI).ToList();
 
             if (ltTASRegistroNotasEstudiante.Count > 0)
             {
@@ -143,7 +156,7 @@ namespace adminlte.Controllers
                     Materia = Materia,
                     ModuloMateria = ModuloMateria,
                     Gestion = Gestion,
-                    CodigoTASEstudiante = CodigoTASEstudiante,
+                    CodigoTASEstudiante = EstudianteCI,
                     NombreEstudiante = NombreEstudiante,
                     Progreso1P = "",
                     Progreso2P = "",

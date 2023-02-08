@@ -163,6 +163,10 @@ namespace adminlte.Controllers
                     List<TASCertificadoCalificacionesClass> TASCertificadoCalificaciones = new List<TASCertificadoCalificacionesClass>();
                     TASRegistroNotasInterfaceClient TASRegistroNotas = new TASRegistroNotasInterfaceClient();
                     List< TASRegistroNotasEstudianteEntity> ltTASRegistroNotasEstudiante = TASRegistroNotas.WebTASRegistroNotasEstudianteSeleccionarXSubCompaniaEstudiante((string)Session["SesionSubCompania"], Estudiante ,(string)Session["Sesion"], (string)Session["SesionSubCompania"]);
+                    TASEstudianteInterfaceClient TASEstudiante = new TASEstudianteInterfaceClient();
+                    var setTASEstudiante = TASEstudiante.WebSeleccionar((string)Session["SesionSubCompania"], Estudiante, (string)Session["Sesion"], (string)Session["SesionSubCompania"]);
+                    var etTASEstudiante = setTASEstudiante.ltTASEstudiante.First();
+
                     foreach (var NotasEstudiante in ltTASRegistroNotasEstudiante)
                     {
                         var TASRegistroNotasSet = TASRegistroNotas.WebSeleccionar(NotasEstudiante.SubCompania, NotasEstudiante.Programa, NotasEstudiante.Grupo, NotasEstudiante.Materia, NotasEstudiante.ModuloMateria, NotasEstudiante.Gestion, (string)Session["Sesion"], (string)Session["SesionSubCompania"]);
@@ -180,7 +184,7 @@ namespace adminlte.Controllers
                             Nombre = etTASRegistroNotasEstudiante.NombreEstudiante,
                             Programa = etTASRegistroNotasEstudiante.Programa,
                             CI = etTASRegistroNotasEstudiante.CodigoTASEstudiante,
-                            CodigoTAS = etTASRegistroNotasEstudiante.CodigoTASEstudiante,
+                            CodigoTAS = etTASEstudiante.CodigoTAS,
                             Gestion = etTASRegistroNotasEstudiante.Gestion,
                             Materia = etTASRegistroNotasEstudiante.Materia,
                             ModuloMateria = etTASRegistroNotasEstudiante.ModuloMateria,

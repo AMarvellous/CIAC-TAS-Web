@@ -1,0 +1,4 @@
+[Fecha]: 27/6/2021 13:20:44[Tipo]Exception [Excepcion/Evento]: Referencia a objeto no establecida como instancia de un objeto. [Clase]: TASRegistroNotas [Action]: TASRegistroNotasEditar
+[Fecha]: 27/6/2021 14:28:14[Tipo]Exception [Excepcion/Evento]: Referencia a objeto no establecida como instancia de un objeto. [Clase]: Error [Action]: NotFound
+[Fecha]: 27/6/2021 14:28:14[Tipo]Exception [Excepcion/Evento]: Value cannot be null or empty.
+Nombre del parámetro: contentPath [Clase]: Error [Action]: NotFound

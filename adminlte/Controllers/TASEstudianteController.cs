@@ -54,7 +54,7 @@ namespace adminlte.Controllers
         }
 
         [HttpGet]
-        public ActionResult TASEstudianteNotasGrilla(string Programa, string Grupo, string Materia, string ModuloMateria , string Gestion, string CodigoTASEstudiante)
+        public ActionResult TASEstudianteNotasGrilla(string Programa, string Grupo, string Materia, string ModuloMateria , string Gestion, string EstudianteCI)
         {
             NumberFormatInfo numberFormatWithComma = new NumberFormatInfo();
             numberFormatWithComma.NumberDecimalSeparator = ".";
@@ -62,7 +62,7 @@ namespace adminlte.Controllers
             TASRegistroNotasInterfaceClient TASRegistroNotas = new TASRegistroNotasInterfaceClient();
             TASRegistroNotasSet setTASRegistroNotas = TASRegistroNotas.WebSeleccionar((string)Session["SesionSubCompania"], Programa, Grupo, Materia, ModuloMateria, Gestion, (string)Session["Sesion"], (string)Session["SesionSubCompania"]);
             //List<TASRegistroNotasEstudianteEntity> ltTASRegistroNotasEstudiante = TASRegistroNotas.WebTASRegistroNotasEstudianteSeleccionar((string)Session["SesionSubCompania"], Programa, Grupo, Materia, ModuloMateria, Gestion, CodigoTASEstudiante, (string)Session["Sesion"], (string)Session["SesionSubCompania"]);
-            TASRegistroNotasEstudianteEntity etTASRegistroNotasEstudiante = setTASRegistroNotas.ltTASRegistroNotasEstudiante.Where(x => x.CodigoTASEstudiante == CodigoTASEstudiante).FirstOrDefault();
+            TASRegistroNotasEstudianteEntity etTASRegistroNotasEstudiante = setTASRegistroNotas.ltTASRegistroNotasEstudiante.Where(x => x.CodigoTASEstudiante == EstudianteCI).FirstOrDefault();
 
             TASRegistroNotasEntity etTASRegistroNotas = setTASRegistroNotas.ltTASRegistroNotas.First();
             ViewBag.ltTASRegistroNotas = etTASRegistroNotas;
@@ -78,7 +78,7 @@ namespace adminlte.Controllers
             return View(etTASRegistroNotasEstudiante);
         }
 
-        public decimal TASRegistroNotasEstudianteCalcularNotaFinal(string Programa, string Grupo, string Materia, string ModuloMateria, string Gestion, string CodigoTASEstudiante)
+        public decimal TASRegistroNotasEstudianteCalcularNotaFinal(string Programa, string Grupo, string Materia, string ModuloMateria, string Gestion, string EstudianteCI)
         {
             NumberFormatInfo numberFormatWithComma = new NumberFormatInfo();
             numberFormatWithComma.NumberDecimalSeparator = ".";
@@ -86,7 +86,7 @@ namespace adminlte.Controllers
             TASRegistroNotasInterfaceClient TASRegistroNotas = new TASRegistroNotasInterfaceClient();
             TASRegistroNotasSet setTASRegistroNotas = TASRegistroNotas.WebSeleccionar((string)Session["SesionSubCompania"], Programa, Grupo, Materia, ModuloMateria, Gestion, (string)Session["Sesion"], (string)Session["SesionSubCompania"]);
             //List<TASRegistroNotasEstudianteEntity> ltTASRegistroNotasEstudiante = TASRegistroNotas.WebTASRegistroNotasEstudianteSeleccionar((string)Session["SesionSubCompania"], Programa, Grupo, Materia, ModuloMateria, Gestion, CodigoTASEstudiante, (string)Session["Sesion"], (string)Session["SesionSubCompania"]);
-            TASRegistroNotasEstudianteEntity etTASRegistroNotasEstudiante = setTASRegistroNotas.ltTASRegistroNotasEstudiante.Where(x => x.CodigoTASEstudiante == CodigoTASEstudiante).FirstOrDefault();
+            TASRegistroNotasEstudianteEntity etTASRegistroNotasEstudiante = setTASRegistroNotas.ltTASRegistroNotasEstudiante.Where(x => x.CodigoTASEstudiante == EstudianteCI).FirstOrDefault();
 
             TASRegistroNotasEntity etTASRegistroNotas = setTASRegistroNotas.ltTASRegistroNotas.First();
 

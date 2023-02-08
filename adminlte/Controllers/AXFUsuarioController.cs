@@ -48,8 +48,8 @@ namespace adminlte.Controllers
                 AXFUsuarioSet setAXFUsuario = AXFUsuario.WebSeleccionar((string)Session["Usuario"], (string)Session["SesionSubCompania"], (string)Session["Sesion"], (string)Session["SesionSubCompania"]);
                 AXFUsuarioEntity etAXFUsuario = setAXFUsuario.ltAXFUsuario.First();
                 etAXFUsuario.Nombre = etAXFUsuarioForm.Nombre;
-                etAXFUsuario.CorreoElectronico = etAXFUsuarioForm.CorreoElectronico;
-                etAXFUsuario.Telefono1 = etAXFUsuarioForm.Telefono1;
+                etAXFUsuario.CorreoElectronico = etAXFUsuarioForm.CorreoElectronico == null ? "" : etAXFUsuarioForm.CorreoElectronico;
+                etAXFUsuario.Telefono1 = etAXFUsuarioForm.Telefono1 == null ? "" : etAXFUsuarioForm.Telefono1;
                 //etAXFUsuario.Clave = AXFUsuario.WebEncriptarClave( etAXFUsuarioForm.Clave, (string)Session["Sesion"], (string)Session["SesionSubCompania"]);
                 etAXFUsuario.Clave = etAXFUsuarioForm.Clave;
                 etAXFUsuario.UEstado = AXFUsuarioService.Estado.Modified;

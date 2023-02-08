@@ -29,7 +29,9 @@
                     <h3 class="box-title">CIAC TAS</h3>
                 </div>
                 <!-- /.box-header -->
-
+                <div class="col-sm-12">
+                    @Html.ActionLink(" ", "TASRegistroNotasLista", null, new { @class = "glyphicon glyphicon-circle-arrow-left ", style = "font-size:28px;" })
+                </div>
                 <!-- form start -->
                 @*<form role="form">*@
                 <div class="box-body">
@@ -40,7 +42,7 @@
                         @Html.Label("Programa")
                         <div class="input-group">
                             <div class="input-group-addon">
-                                <i class="fa fa-users"></i>
+                                <i class="fa fa-archive"></i>
                             </div>
                             @*@Html.EditorFor(model => model.ltTASRegistroNotas[0].Grupo, new { htmlAttributes = new { @class = "form-control" } })*@
                             @Html.DropDownListFor(model => model.ltTASRegistroNotas[0].Programa, new SelectList(@ViewBag.ltTASPrograma as System.Collections.IEnumerable, null, "Programa"), "Programa", new { @class = "form-control controlar" })
@@ -54,7 +56,7 @@
                         @Html.Label("Grupo")
                         <div class="input-group">
                             <div class="input-group-addon">
-                                <i class="fa fa-users"></i>
+                                <i class="fa fa-group"></i>
                             </div>
                             @*@Html.EditorFor(model => model.ltTASRegistroNotas[0].Grupo, new { htmlAttributes = new { @class = "form-control" } })*@
                             @Html.DropDownListFor(model => model.ltTASRegistroNotas[0].Grupo, new SelectList(@ViewBag.ltTASGrupo as System.Collections.IEnumerable, null, "Grupo"), "Grupo", new { @class = "form-control controlar" })
@@ -69,7 +71,7 @@
                         @Html.Label("Materia")
                         <div class="input-group">
                             <div class="input-group-addon">
-                                <i class="fa fa-users"></i>
+                                <i class="fa fa-book"></i>
                             </div>
                             @*@Html.EditorFor(model => model.ltTASRegistroNotas[0].Grupo, new { htmlAttributes = new { @class = "form-control" } })*@
                             @Html.DropDownListFor(model => model.ltTASRegistroNotas[0].Materia, new SelectList(@ViewBag.ltTASMateria as System.Collections.IEnumerable, null, "Materia"), "Materia", new { @class = "form-control controlar" })
@@ -78,24 +80,12 @@
                         </div>
                         <!-- /.input group -->
                     </div>
-                    <div class="form-group">
-                        @Html.Label("Modulo")
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                <i class="fa fa-users"></i>
-                            </div>
-                            @*@Html.EditorFor(model => model.ltTASRegistroNotas[0].Grupo, new { htmlAttributes = new { @class = "form-control" } })*@
-                            @Html.DropDownListFor(model => model.ltTASRegistroNotas[0].ModuloMateria, new SelectList(@ViewBag.ltTASModulo as System.Collections.IEnumerable, null, "Modulo"), "Modulo", new { @class = "form-control controlar" })
-                            @Html.ValidationMessageFor(model => model.ltTASRegistroNotas[0].ModuloMateria, "", new { @class = "text-danger" })
-                            @*<input type="number" class="form-control">*@
-                        </div>
-                        <!-- /.input group -->
-                    </div>
+                    
                     <div class="form-group">
                         @Html.Label("Gestion")
                         <div class="input-group">
                             <div class="input-group-addon">
-                                <i class="fa fa-users"></i>
+                                <i class="fa fa-calendar"></i>
                             </div>
                             @*@Html.EditorFor(model => model.ltTASRegistroNotas[0].Grupo, new { htmlAttributes = new { @class = "form-control" } })*@
                             @Html.DropDownListFor(model => model.ltTASRegistroNotas[0].Gestion, new SelectList(@ViewBag.ltTASGestion as System.Collections.IEnumerable, null, "Gestion"), "Gestion", new { @class = "form-control controlar" })
@@ -109,7 +99,7 @@
                         @Html.Label("Progregos Cantidad")
                         <div class="input-group">
                             <div class="input-group-addon">
-                                <i class="fa fa-users"></i>
+                                <i class="fa fa-plus-square-o"></i>
                             </div>
                             @*@Html.EditorFor(model => model.ltTASRegistroNotas[0].Grupo, new { htmlAttributes = new { @class = "form-control" } })*@
                             @Html.DropDownList("CantidadProgresos", new SelectList(@ViewBag.ltCantidadProgresos as System.Collections.IEnumerable), "Cantidad de Progresos", new { @class = "form-control controlar" })
@@ -156,6 +146,7 @@
                     Row += '<input type="text" class="form-control allownumericwithdecimal porcentajeEvaluacion" placeholder="Porcentaje Progreso">'
                     Row += '</div>'
                     Row += '</div>'
+                    Row += '</br>'
 
                     $(".box-body").append(Row);
 
@@ -188,11 +179,6 @@
 
             if ($('#ltTASRegistroNotas_0__Materia').val() == '') {
                 alert("No se selecciono ninguna Materia");
-                return false;
-            }
-
-            if ($('#ltTASRegistroNotas_0__ModuloMateria').val() == '') {
-                alert("No se selecciono ningun Modulo");
                 return false;
             }
 

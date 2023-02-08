@@ -1,12 +1,12 @@
-﻿@model IEnumerable<adminlte.TASEstudianteService.TASEstudianteEntity>
+﻿@model IEnumerable<adminlte.TASEstudianteMateriasAsignacionService.TASEstudianteMateriasAsignacionEntity>
 
 @{
     ViewBag.Title = "TASRegistroNotasEditar";
     Layout = "~/Views/Shared/_Layout.cshtml";
     WebGrid grid = new WebGrid(Model, // source
                                 null, // columnNames
-                                "Apellido1", // defaultSort
-                                20,   // rowsPerPage
+                                "Texto0", // defaultSort
+                                25,   // rowsPerPage
                                 true, // canPage
                                 true, // canSort
                                 null, // ajaxUpdateContainerId
@@ -41,6 +41,66 @@
                 <h3 class="box-title">CIAC TAS</h3>
             </div>
             <!-- /.box-header -->
+            <div class="col-sm-12">
+                @Html.ActionLink(" ", "TASRegistroNotasLista", null, new { @class = "glyphicon glyphicon-circle-arrow-left ", style = "font-size:28px;" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Programa")
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-archive"></i>
+                    </div>
+                    @Html.TextBox("Programa", (string)ViewBag.Programa, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })                    
+                </div>
+                <!-- /.input group -->
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Grupo")
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-group"></i>
+                    </div>
+                    @Html.TextBox("Grupo", (string)ViewBag.Grupo, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+                </div>
+                <!-- /.input group -->
+            </div>
+
+
+            <div class="form-group">
+                @Html.Label("Materia")
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-book"></i>
+                    </div>
+                    @Html.TextBox("Materia", (string)ViewBag.Materia, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+                </div>
+                <!-- /.input group -->
+            </div>
+
+            <div class="form-group">
+                @Html.Label("ModuloMateria")
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-newspaper-o"></i>
+                    </div>
+                    @Html.TextBox("ModuloMateria", (string)ViewBag.ModuloMateria, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+                </div>
+                <!-- /.input group -->
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Gestion")
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    @Html.TextBox("Gestion", (string)ViewBag.Gestion, new { @class = "form-control", disabled = "disabled", @readonly = "readonly" })
+                </div>
+                <!-- /.input group -->
+            </div>
+
             <!-- form start -->
             @*<form role="form">*@
             <div class="box-body table-responsive">
@@ -57,22 +117,15 @@
                             //grid.Column("TipoDoc"),
                            // grid.Column("SubCompania"),
                             grid.Column("EstudianteCI", "C.I."),
-                            grid.Column("Nombre1", "Primer Nombre"),
-                            grid.Column("Nombre2", "Segundo Nombre"),
-                            grid.Column("Apellido1", "Primer Apellido"),
-                            grid.Column("Apellido2", "Segundo Apellido"),
-
+                            grid.Column("Texto0", "Nombre Estudiante"),
 
                             grid.Column("",
                                         header:"Acciones",
                                         format:@<text>
-        @Html.ActionLink(" ", "TASRegistroNotasEstudianteEditar", new {NombreEstudiante = item.Nombre1 + " " +item.Nombre2 + " "+item.Apellido1 + " "+item.Apellido2,CodigoTASEstudiante = item.EstudianteCI , SubCompania= (string)ViewBag.SubCompania, Programa= (string)ViewBag.Programa,Grupo= (string)ViewBag.Grupo,Materia= (string)ViewBag.Materia,ModuloMateria= (string)ViewBag.ModuloMateria,Gestion= (string)ViewBag.Gestion},new {data_modal = "",@class = "glyphicon glyphicon-edit ",style = "font-size:15px;"})
+        @Html.ActionLink(" ", "TASRegistroNotasEstudianteEditar", new {NombreEstudiante = item.Texto0,EstudianteCI = item.EstudianteCI , SubCompania= item.SubCompania, Programa= item.Programa,Grupo= item.Grupo,Materia= item.Materia,ModuloMateria= item.ModuloMateria,Gestion= item.Gestion},new {data_modal = "",@class = "glyphicon glyphicon-edit ",style = "font-size:15px;"})
                                         </text>
                                                                                                                         )
                                                                                                            })
-
-
-
             </div>
             <!-- /.box-body -->
             @*</form>*@

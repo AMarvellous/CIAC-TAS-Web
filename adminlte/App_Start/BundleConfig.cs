@@ -79,5 +79,6 @@ namespace adminlte
                 .Include(lteplugins + "pace/pace.min.css")
                 .Include(ltecomponents + "fullcalendar/dist/fullcalendar.min.css"));
         }
+
     }
 }
